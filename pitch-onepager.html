@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>The Oasis Guide — Pitch Sheet for Restaurants</title>
+<style>
+  @page { size: letter; margin: 0.6in; }
+  * { box-sizing: border-box; }
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    color: #1a2a33;
+    background: #fcfaf5;
+    line-height: 1.45;
+    font-size: 11pt;
+    margin: 0;
+    padding: 0.6in;
+    max-width: 8.5in;
+  }
+  header { text-align: center; border-bottom: 1px solid #c9b88a; padding-bottom: 1.1em; margin-bottom: 1.5em; }
+  .brand {
+    font-family: Georgia, serif;
+    font-size: 26pt;
+    font-weight: normal;
+    letter-spacing: 0.04em;
+    margin: 0 0 0.2em;
+    color: #1a3a4a;
+  }
+  .brand .a { color: #2e7d8f; }
+  .tagline { font-style: italic; color: #6b5a3e; margin: 0; font-size: 11pt; letter-spacing: 0.03em; }
+  h2 {
+    font-family: Georgia, serif;
+    font-size: 13pt;
+    font-weight: bold;
+    color: #1a3a4a;
+    border-bottom: 1px solid #d8c89a;
+    padding-bottom: 0.2em;
+    margin: 1.6em 0 0.6em;
+    letter-spacing: 0.02em;
+  }
+  p { margin: 0.4em 0; }
+  ul { margin: 0.3em 0 0.5em; padding-left: 1.4em; }
+  li { margin: 0.2em 0; }
+  .lede {
+    font-size: 12pt;
+    line-height: 1.5;
+    color: #1a3a4a;
+    border-left: 3px solid #c9b88a;
+    padding: 0.4em 0 0.4em 1em;
+    margin: 0.6em 0 1em;
+    font-style: italic;
+  }
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5em; }
+  .tiers { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.8em; margin-top: 0.5em; }
+  .tier {
+    border: 1px solid #c9b88a;
+    background: #fffdf6;
+    padding: 0.7em 0.8em;
+    text-align: center;
+  }
+  .tier .drops { color: #2e7d8f; margin-bottom: 0.3em; line-height: 1; }
+  .tier .drops svg { vertical-align: middle; margin: 0 2px; }
+  .tier .name { font-weight: bold; font-size: 10.5pt; color: #1a3a4a; }
+  .tier .desc { font-size: 9.5pt; color: #45555f; margin-top: 0.3em; }
+  .verifier-note {
+    background: #1a3a4a;
+    color: #fcfaf5;
+    padding: 0.9em 1.1em;
+    margin: 1.2em 0 0;
+    font-size: 10.5pt;
+    line-height: 1.5;
+  }
+  .verifier-note strong { color: #e8d294; }
+  footer {
+    margin-top: 1.4em;
+    padding-top: 0.8em;
+    border-top: 1px solid #c9b88a;
+    font-size: 9.5pt;
+    color: #6b5a3e;
+    text-align: center;
+    line-height: 1.6;
+  }
+  footer .contact { color: #1a3a4a; font-size: 10.5pt; }
+  .pull { font-size: 11pt; font-weight: bold; color: #1a3a4a; margin: 0.4em 0; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1 class="brand">The Oasis <span class="a">Guide</span></h1>
+  <p class="tagline">A curated guide to Phoenix restaurants serving clean water.</p>
+</header>
+
+<p class="lede">
+  Diners are starting to ask where the water comes from. The Oasis Guide is
+  the directory that answers — vetted in person, by a water industry
+  professional, with the readings published openly. If your restaurant
+  serves clean water, we want diners to find you.
+</p>
+
+<div class="cols">
+  <div>
+    <h2>What you get</h2>
+    <ul>
+      <li>A listing on theoasisguide.com — your restaurant on the map and in the directory.</li>
+      <li>A printable window decal + menu badge in the verified tier.</li>
+      <li>Free on-site water-quality test (TDS + pH at every customer-facing tap) by James personally.</li>
+      <li>Your verified readings published on your listing — a receipt diners can trust.</li>
+      <li>Free baseline listing. The tier you earn is the tier you display — <strong>no pay-to-tier, ever</strong>.</li>
+    </ul>
+  </div>
+  <div>
+    <h2>What we ask</h2>
+    <ul>
+      <li>About 20 minutes for the on-site visit.</li>
+      <li>An honest description of your water setup (filter brands, where it's installed, what gets used where).</li>
+      <li>Permission to publish the readings.</li>
+      <li>Annual re-test to keep the listing current.</li>
+    </ul>
+    <p class="pull">That's it. No fee, no contract, no exclusivity.</p>
+  </div>
+</div>
+
+<h2>The three tiers</h2>
+<p>Each tier is earned by what's actually measured on site. Restaurants can move up as they invest in better water.</p>
+<!-- Reusable water-drop mark -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="drop" viewBox="-10 -14 20 30">
+    <path d="M 0,-12 C 7,-2 8,4 7,9 C 7,13 4,15 0,15 C -4,15 -7,13 -7,9 C -8,4 -7,-2 0,-12 Z"
+          fill="currentColor"/>
+  </symbol>
+</svg>
+
+<div class="tiers">
+  <div class="tier">
+    <div class="drops"><svg width="14" height="20"><use href="#drop"/></svg></div>
+    <div class="name">Recommended</div>
+    <div class="desc">Purified drinking water &amp; beverages.<br>Tap water for cooking &amp; ice.</div>
+  </div>
+  <div class="tier">
+    <div class="drops"><svg width="14" height="20"><use href="#drop"/></svg><svg width="14" height="20"><use href="#drop"/></svg></div>
+    <div class="name">Distinguished</div>
+    <div class="desc">Purified drinking, beverages, ice, and cooking water.</div>
+  </div>
+  <div class="tier">
+    <div class="drops"><svg width="14" height="20"><use href="#drop"/></svg><svg width="14" height="20"><use href="#drop"/></svg><svg width="14" height="20"><use href="#drop"/></svg></div>
+    <div class="name">Exemplary</div>
+    <div class="desc">Whole-restaurant purification at point of entry. Every tap.</div>
+  </div>
+</div>
+
+<div class="verifier-note">
+  <strong>Why this is different.</strong>
+  Most "best of" lists run on submissions and self-attestation. Every
+  listing in The Oasis Guide is verified in person by James Arkell, a
+  Phoenix-based water professional, with calibrated meters at the bar,
+  the kitchen, the ice machine, and any drinking-water station. Readings
+  go on the listing. <strong>Tier badges are earned, not bought</strong> —
+  the on-site test is the only way to move up a tier.
+</div>
+
+<h2>What we're looking for in founding restaurants</h2>
+<ul>
+  <li>Phoenix-metro restaurants already taking water seriously — filtered station, RO at the bar, point-of-entry treatment, or similar.</li>
+  <li>A water story worth telling — even if it's just "we don't think diners should drink the tap."</li>
+  <li>Founding restaurants (the first three to five) keep a permanent featured spot on the home page as a thank-you for stepping in early.</li>
+</ul>
+
+<footer>
+  <p class="contact"><strong>James Arkell</strong> &nbsp;·&nbsp; The Oasis Guide</p>
+  <p>theoasisguide.com (launching soon) &nbsp;·&nbsp; A Safe Water Southwest project</p>
+</footer>
+
+</body>
+</html>

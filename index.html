@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Oasis Guide — Phoenix restaurants serving genuinely clean water</title>
+<meta name="description" content="A curated guide to Phoenix-metro restaurants serving genuinely clean water. Verified in person, on site, by a water professional. Free for diners.">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+<style>
+  :root {
+    --ink: #13355c;
+    --ink-deep: #0a2240;
+    --gold: #c9a14a;
+    --gold-soft: #d4b772;
+    --cream: #faf6ec;
+    --cream-line: #e6dcc0;
+    --paper: #fcfaf5;
+    --text: #1a2a33;
+    --muted: #6b5a3e;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    background: var(--paper);
+    color: var(--text);
+    line-height: 1.55;
+    font-size: 17px;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--gold); text-underline-offset: 3px; }
+  a:hover { color: var(--gold); }
+
+  /* ===== Header / nav ===== */
+  header.site {
+    background: var(--ink);
+    color: var(--cream);
+    padding: 1rem 1.5rem;
+    border-bottom: 2px solid var(--gold);
+  }
+  .nav-wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-decoration: none;
+    color: var(--cream);
+  }
+  .brand-mark { width: 42px; height: 42px; flex-shrink: 0; }
+  .brand-name { font-size: 1.25rem; letter-spacing: 0.06em; color: var(--gold-soft); }
+  .brand-name em { font-style: italic; }
+  nav.primary { display: flex; gap: 1.5rem; }
+  nav.primary a {
+    color: var(--cream);
+    text-decoration: none;
+    font-size: 0.95rem;
+    letter-spacing: 0.04em;
+  }
+  nav.primary a:hover { color: var(--gold); }
+
+  /* ===== Hero ===== */
+  .hero {
+    background: var(--ink);
+    color: var(--cream);
+    padding: 5rem 1.5rem 6rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at top, rgba(201, 161, 74, 0.08), transparent 60%);
+    pointer-events: none;
+  }
+  .hero-inner { max-width: 760px; margin: 0 auto; position: relative; }
+  .hero h1 {
+    font-size: clamp(2rem, 5vw, 3.4rem);
+    font-weight: normal;
+    letter-spacing: 0.02em;
+    line-height: 1.15;
+    margin-bottom: 1.2rem;
+  }
+  .hero h1 em { color: var(--gold-soft); font-style: italic; }
+  .hero .lede {
+    font-size: 1.15rem;
+    color: var(--cream);
+    opacity: 0.92;
+    max-width: 600px;
+    margin: 0 auto 2.2rem;
+    line-height: 1.6;
+  }
+  .hero .cta {
+    display: inline-block;
+    background: var(--gold);
+    color: var(--ink-deep);
+    padding: 0.85rem 1.8rem;
+    font-family: Georgia, serif;
+    font-size: 0.95rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .hero .cta:hover { background: var(--gold-soft); color: var(--ink-deep); }
+  .hero-divider {
+    width: 80px;
+    height: 1px;
+    background: var(--gold);
+    margin: 0 auto 1.5rem;
+    opacity: 0.6;
+  }
+
+  /* ===== Section base ===== */
+  section { padding: 4rem 1.5rem; }
+  section .inner { max-width: 1000px; margin: 0 auto; }
+  h2.section-title {
+    font-size: 1.7rem;
+    font-weight: normal;
+    color: var(--ink);
+    letter-spacing: 0.03em;
+    margin-bottom: 0.4em;
+    padding-bottom: 0.4em;
+    border-bottom: 1px solid var(--cream-line);
+  }
+  h2.section-title em { color: var(--gold); font-style: italic; }
+  .section-sub {
+    color: var(--muted);
+    font-style: italic;
+    margin-bottom: 2rem;
+    font-size: 1rem;
+  }
+  section p { margin-bottom: 1rem; }
+
+  /* ===== About section ===== */
+  .about { background: var(--paper); }
+  .about .inner { max-width: 760px; }
+  .about p { font-size: 1.05rem; line-height: 1.7; }
+  .about .pull {
+    border-left: 3px solid var(--gold);
+    padding: 0.6em 0 0.6em 1.3em;
+    margin: 1.4em 0;
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--ink);
+  }
+
+  /* ===== Tiers ===== */
+  .tiers-section { background: var(--cream); }
+  .tier-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1rem;
+  }
+  .tier-card {
+    background: var(--paper);
+    border: 1px solid var(--cream-line);
+    padding: 2rem 1.5rem 1.7rem;
+    text-align: center;
+    position: relative;
+  }
+  .tier-card .badge {
+    width: 90px;
+    height: 90px;
+    margin: 0 auto 1rem;
+    display: block;
+  }
+  .tier-card h3 {
+    font-size: 1.1rem;
+    color: var(--ink);
+    letter-spacing: 0.12em;
+    font-weight: bold;
+    margin-bottom: 0.6em;
+  }
+  .tier-card p {
+    font-size: 0.95rem;
+    color: var(--text);
+    margin: 0;
+    line-height: 1.55;
+  }
+
+  /* ===== Map section ===== */
+  .map-section { background: var(--paper); }
+  .map-section .inner { max-width: 1100px; }
+  #map {
+    height: 480px;
+    width: 100%;
+    border: 1px solid var(--cream-line);
+    margin-top: 1rem;
+    position: relative;
+    background: #cce0e8;
+  }
+  .map-empty-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(19, 53, 92, 0.78);
+    color: var(--cream);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    padding: 2rem;
+    z-index: 500;
+    pointer-events: none;
+  }
+  .map-empty-overlay h3 {
+    font-size: 1.4rem;
+    margin-bottom: 0.5em;
+    font-weight: normal;
+    color: var(--gold-soft);
+    letter-spacing: 0.04em;
+  }
+  .map-empty-overlay p {
+    font-size: 1rem;
+    margin: 0;
+    max-width: 460px;
+    opacity: 0.9;
+  }
+  .map-empty-overlay .mark {
+    margin-bottom: 1rem;
+    opacity: 0.85;
+  }
+
+  /* ===== Signup form ===== */
+  .signup-section { background: var(--ink); color: var(--cream); }
+  .signup-section h2.section-title { color: var(--cream); border-bottom-color: rgba(201, 161, 74, 0.4); }
+  .signup-section h2.section-title em { color: var(--gold-soft); }
+  .signup-section .section-sub { color: var(--gold-soft); opacity: 0.85; }
+  .signup-section .inner { max-width: 760px; }
+  form.signup {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem 1.5rem;
+    margin-top: 1.5rem;
+  }
+  form.signup label {
+    grid-column: span 2;
+    display: flex;
+    flex-direction: column;
+    font-size: 0.85rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--gold-soft);
+  }
+  form.signup label.half { grid-column: span 1; }
+  form.signup input, form.signup textarea {
+    margin-top: 0.4rem;
+    padding: 0.7rem 0.9rem;
+    border: 1px solid rgba(201, 161, 74, 0.4);
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--cream);
+    font-family: Georgia, serif;
+    font-size: 1rem;
+  }
+  form.signup input:focus, form.signup textarea:focus {
+    outline: none;
+    border-color: var(--gold);
+    background: rgba(255, 255, 255, 0.08);
+  }
+  form.signup textarea { resize: vertical; min-height: 90px; }
+  form.signup .submit-row {
+    grid-column: span 2;
+    margin-top: 0.5rem;
+  }
+  form.signup button {
+    background: var(--gold);
+    color: var(--ink-deep);
+    border: none;
+    padding: 0.85rem 1.8rem;
+    font-family: Georgia, serif;
+    font-size: 0.95rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  form.signup button:hover { background: var(--gold-soft); }
+  .signup-fine {
+    font-size: 0.85rem;
+    color: var(--gold-soft);
+    opacity: 0.7;
+    margin-top: 1.5rem;
+    font-style: italic;
+  }
+
+  /* ===== Footer ===== */
+  footer.site {
+    background: var(--ink-deep);
+    color: var(--cream);
+    padding: 2.5rem 1.5rem;
+    text-align: center;
+  }
+  footer.site .inner { max-width: 760px; margin: 0 auto; }
+  footer.site p { font-size: 0.95rem; margin-bottom: 0.5em; opacity: 0.9; }
+  footer.site .parent {
+    color: var(--gold-soft);
+    font-style: italic;
+    font-size: 0.9rem;
+    opacity: 0.8;
+  }
+  footer.site a { color: var(--gold-soft); }
+
+  /* ===== Responsive ===== */
+  @media (max-width: 640px) {
+    body { font-size: 16px; }
+    section { padding: 3rem 1.2rem; }
+    .hero { padding: 3.5rem 1.2rem 4rem; }
+    .hero h1 { font-size: 2rem; }
+    .hero .lede { font-size: 1rem; }
+    nav.primary { display: none; }
+    form.signup { grid-template-columns: 1fr; }
+    form.signup label.half { grid-column: span 1; }
+    form.signup .submit-row { grid-column: span 1; }
+    #map { height: 360px; }
+    .brand-name { font-size: 1.05rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Reusable water-drop SVG symbol -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="drop" viewBox="-10 -14 20 30">
+    <path d="M 0,-12 C 7,-2 8,4 7,9 C 7,13 4,15 0,15 C -4,15 -7,13 -7,9 C -8,4 -7,-2 0,-12 Z"
+          fill="currentColor"/>
+  </symbol>
+</svg>
+
+<!-- Reusable Oasis Guide hex badge symbol -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="oasis-mark" viewBox="0 0 200 200">
+    <polygon points="100,15 175,55 175,145 100,185 25,145 25,55" fill="#13355c"/>
+    <polygon points="100,28 162,62 162,138 100,172 38,138 38,62" fill="none" stroke="#c9a14a" stroke-width="0.8"/>
+    <g color="#c9a14a">
+      <use href="#drop" x="89" y="78" width="22" height="44"/>
+    </g>
+  </symbol>
+</svg>
+
+<header class="site">
+  <div class="nav-wrap">
+    <a href="#" class="brand">
+      <svg class="brand-mark" viewBox="0 0 200 200">
+        <use href="#oasis-mark"/>
+      </svg>
+      <span class="brand-name"><em>The</em> Oasis Guide</span>
+    </a>
+    <nav class="primary">
+      <a href="#about">About</a>
+      <a href="#tiers">Tiers</a>
+      <a href="#directory">Directory</a>
+      <a href="#join">Restaurants</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ===== Hero ===== -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-divider"></div>
+    <h1>Phoenix restaurants serving <em>genuinely clean water.</em></h1>
+    <p class="lede">
+      A curated guide to restaurants that take water seriously — verified on site,
+      tap by tap, by a water professional. Free for diners.
+    </p>
+    <a href="#directory" class="cta">See the directory</a>
+  </div>
+</section>
+
+<!-- ===== About ===== -->
+<section class="about" id="about">
+  <div class="inner">
+    <h2 class="section-title">What this is <em>(and isn't)</em></h2>
+    <p class="section-sub">Phoenix water is hard, and most restaurants serve it straight from the tap. A few don't.</p>
+
+    <p>
+      The Oasis Guide is a directory of Phoenix-metro restaurants serving
+      genuinely clean water — purified at the bar, in the ice, in the coffee,
+      sometimes throughout the whole kitchen. Diners who care about water
+      quality can find them. That's it.
+    </p>
+
+    <p>
+      Every restaurant on the directory has been visited in person and tested
+      with calibrated meters at every customer-facing tap: bar, ice machine,
+      drinking-water station, kitchen. The TDS and pH readings are published
+      on the listing — no claims you can't verify, no awards you can't see the
+      receipts for.
+    </p>
+
+    <div class="pull">
+      Tier badges are earned, not bought. The on-site test is the only way to
+      move up a tier.
+    </div>
+
+    <p>
+      The guide is free for diners and free for restaurants. There's no paid
+      placement on listings, no sponsored tiers. If a restaurant earns
+      Distinguished, it's because the water at the kitchen, the bar, and the
+      ice machine all came back clean.
+    </p>
+  </div>
+</section>
+
+<!-- ===== Tiers ===== -->
+<section class="tiers-section" id="tiers">
+  <div class="inner">
+    <h2 class="section-title">The three tiers</h2>
+    <p class="section-sub">Each tier is earned by what was actually measured. Restaurants can move up as they invest in better water.</p>
+
+    <div class="tier-grid">
+      <!-- Recommended -->
+      <div class="tier-card">
+        <svg class="badge" viewBox="0 0 200 200">
+          <polygon points="100,15 175,55 175,145 100,185 25,145 25,55" fill="#13355c"/>
+          <polygon points="100,28 162,62 162,138 100,172 38,138 38,62" fill="none" stroke="#c9a14a" stroke-width="0.8"/>
+          <text x="100" y="72" text-anchor="middle" fill="#c9a14a" font-family="Georgia, serif" font-size="9" letter-spacing="2.5">THE OASIS GUIDE</text>
+          <line x1="60" y1="80" x2="140" y2="80" stroke="#c9a14a" stroke-width="0.4" opacity="0.7"/>
+          <g color="#c9a14a">
+            <use href="#drop" x="89" y="86" width="22" height="30"/>
+          </g>
+          <line x1="60" y1="122" x2="140" y2="122" stroke="#c9a14a" stroke-width="0.4" opacity="0.7"/>
+          <text x="100" y="137" text-anchor="middle" fill="#c9a14a" font-family="Georgia, serif" font-size="10" letter-spacing="2" font-weight="bold">RECOMMENDED</text>
+        </svg>
+        <h3>Recommended</h3>
+        <p>Purified drinking water and beverages. Tap water for cooking and ice. The "we take water seriously" floor.</p>
+      </div>
+
+      <!-- Distinguished -->
+      <div class="tier-card">
+        <svg class="badge" viewBox="0 0 200 200">
+          <polygon points="100,15 175,55 175,145 100,185 25,145 25,55" fill="#13355c"/>
+          <polygon points="100,28 162,62 162,138 100,172 38,138 38,62" fill="none" stroke="#c9a14a" stroke-width="0.8"/>
+          <text x="100" y="72" text-anchor="middle" fill="#c9a14a" font-family="Georgia, serif" font-size="9" letter-spacing="2.5">THE OASIS GUIDE</text>
+          <line x1="60" y1="80" x2="140" y2="80" stroke="#c9a14a" stroke-width="0.4" opacity="0.7"/>
+          <g color="#c9a14a">
+            <use href="#drop" x="76" y="86" width="22" height="30"/>
+            <use href="#drop" x="102" y="86" width="22" height="30"/>
+          </g>
+          <line x1="60" y1="122" x2="140" y2="122" stroke="#c9a14a" stroke-width="0.4" opacity="0.7"/>
+          <text x="100" y="137" text-anchor="middle" fill="#c9a14a" font-family="Georgia, serif" font-size="10" letter-spacing="2" font-weight="bold">DISTINGUISHED</text>
+        </svg>
+        <h3>Distinguished</h3>
+        <p>Purified drinking water, beverages, ice, and cooking water. Kitchen and bar both clean.</p>
+      </div>
+
+      <!-- Exemplary -->
+      <div class="tier-card">
+        <svg class="badge" viewBox="0 0 200 200">
+          <polygon points="100,15 175,55 175,145 100,185 25,145 25,55" fill="#13355c"/>
+          <polygon points="100,28 162,62 162,138 100,172 38,138 38,62" fill="none" stroke="#c9a14a" stroke-width="0.8"/>
+          <text x="100" y="72" text-anchor="middle" fill="#c9a14a" font-family="Georgia, serif" font-size="9" letter-spacing="2.5">THE OASIS GUIDE</text>
+          <line x1="60" y1="80" x2="140" y2="80" stroke="#c9a14a" stroke-width="0.4" opacity="0.7"/>
+          <g color="#c9a14a">
+            <use href="#drop" x="63" y="86" width="22" height="30"/>
+            <use href="#drop" x="89" y="86" width="22" height="30"/>
+            <use href="#drop" x="115" y="86" width="22" height="30"/>
+          </g>
+          <line x1="60" y1="122" x2="140" y2="122" stroke="#c9a14a" stroke-width="0.4" opacity="0.7"/>
+          <text x="100" y="137" text-anchor="middle" fill="#c9a14a" font-family="Georgia, serif" font-size="10" letter-spacing="2" font-weight="bold">EXEMPLARY</text>
+        </svg>
+        <h3>Exemplary</h3>
+        <p>Whole-restaurant purification at point of entry. Every tap, every appliance, every sink. The unicorn.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Directory / Map ===== -->
+<section class="map-section" id="directory">
+  <div class="inner">
+    <h2 class="section-title">The directory <em>— Phoenix metro</em></h2>
+    <p class="section-sub">Listings appear on the map once verified. The first restaurants are being tested now.</p>
+    <div id="map">
+      <div class="map-empty-overlay">
+        <svg class="mark" width="64" height="64" viewBox="0 0 200 200">
+          <use href="#oasis-mark"/>
+        </svg>
+        <h3>First listings being verified</h3>
+        <p>The pilot restaurants are being tested in person this month. New listings appear on the map as they're verified. Want yours among the first? See below.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Signup ===== -->
+<section class="signup-section" id="join">
+  <div class="inner">
+    <h2 class="section-title">For restaurants <em>— join the guide</em></h2>
+    <p class="section-sub">Free baseline listing. Free on-site water test. Founding restaurants keep a permanent featured spot.</p>
+
+    <form class="signup" method="POST" action="#" onsubmit="event.preventDefault(); document.getElementById('signup-ack').style.display='block'; this.style.display='none'; return false;">
+      <label class="half">
+        Restaurant name
+        <input type="text" name="restaurant" required>
+      </label>
+      <label class="half">
+        Your name
+        <input type="text" name="contact_name" required>
+      </label>
+      <label class="half">
+        Email
+        <input type="email" name="email" required>
+      </label>
+      <label class="half">
+        Phone
+        <input type="tel" name="phone">
+      </label>
+      <label>
+        Address (street + city)
+        <input type="text" name="address" required>
+      </label>
+      <label>
+        Tell us about your water setup
+        <textarea name="setup" placeholder="What kind of filtration / RO / point-of-entry system? Where in the restaurant is it installed? What does the kitchen use vs the bar vs the ice machine?"></textarea>
+      </label>
+      <div class="submit-row">
+        <button type="submit">Request the on-site test</button>
+      </div>
+    </form>
+
+    <div id="signup-ack" style="display:none; padding: 1.5rem; background: rgba(201,161,74,0.1); border: 1px solid rgba(201,161,74,0.4); margin-top: 1.5rem;">
+      <p style="margin:0; color: var(--gold-soft);"><strong>Thanks — request received.</strong> James will follow up within 48 hours to schedule the on-site test.</p>
+    </div>
+
+    <p class="signup-fine">
+      No fee, no contract, no exclusivity. We test in person and publish the
+      readings. The tier you earn is the tier you display — no pay-to-tier.
+    </p>
+  </div>
+</section>
+
+<!-- ===== Footer ===== -->
+<footer class="site">
+  <div class="inner">
+    <p>
+      <strong style="color: var(--gold-soft); letter-spacing: 0.06em;">THE OASIS GUIDE</strong> — Phoenix
+    </p>
+    <p>Verified in person. No paid placement on listings. No pay-to-tier.</p>
+    <p class="parent">A project of <a href="https://safewatersouthwest.com">Safe Water Southwest</a></p>
+  </div>
+</footer>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script>
+  // Phoenix metro map, centered roughly on the metro area
+  const map = L.map('map', {
+    center: [33.45, -112.0],
+    zoom: 10,
+    scrollWheelZoom: false,
+    zoomControl: true,
+  });
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; OpenStreetMap contributors',
+  }).addTo(map);
+
+  // No restaurant markers yet — overlay says "First listings being verified."
+  // To add a listing later:
+  //   L.marker([33.45, -112.0]).addTo(map).bindPopup('Restaurant name');
+</script>
+
+</body>
+</html>

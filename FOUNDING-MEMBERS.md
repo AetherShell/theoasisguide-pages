@@ -61,4 +61,38 @@ Tier-less founding members live in `data/pending-founding.json` until readings e
 
 ---
 
-*Last updated: 2026-05-14. Maintained as a charter — entries are append-only and dated. Founding moments are historical events, not editable records.*
+---
+
+## Schema addendum — 2026-05-17: per-station coverage
+
+The tier ladder (Recommended / Distinguished / Exemplary) is preserved as additive — see the `2026-05-17-brief-tier-system-partial-coverage.md` brief for the full rationale. To honestly publish restaurants that have invested in filtration without crossing the Recommended threshold (commonly: cooking and equipment lines filtered, drinking water still tap), add a `coverage` object to each restaurant entry:
+
+```typescript
+{
+  // existing fields preserved unchanged
+  coverage: {
+    drinking: "purified" | "tap" | "unknown",   // guest-facing drinking glass
+    beverages: "purified" | "tap" | "unknown",  // bar, coffee, juice, soda fountain
+    ice: "purified" | "tap" | "unknown",        // any ice served
+    cooking: "purified" | "tap" | "unknown",    // kitchen prep, stocks, sauces
+    whole_restaurant_poe: boolean               // single POE filter for everything
+  }
+}
+```
+
+Default is `unknown` for any station not yet assessed. Render lean: omit unknown stations from the coverage map; "unknown" in a published receipt reads as a credibility hole.
+
+**Tier derivation rule (coverage is the source of truth; tier is derivable):**
+
+- `whole_restaurant_poe: true` → `Exemplary` (3 drops)
+- Else, drinking + beverages + ice + cooking all `purified` → `Distinguished` (2 drops)
+- Else, drinking + beverages both `purified` → `Recommended` (1 drop)
+- Else → `null`
+
+**Display rule:** every listing renders the coverage map regardless of tier. The tier badge appears only when one is earned. For partial-coverage listings, the coverage map is the listing's verification receipt — no negative tier label is shown.
+
+This preserves "drops are earned breadth" semantics for the prestige ladder while letting partial-coverage restaurants be honestly published.
+
+---
+
+*Last updated: 2026-05-17. Maintained as a charter — entries are append-only and dated. Founding moments are historical events, not editable records.*

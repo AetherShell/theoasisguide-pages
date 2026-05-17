@@ -234,6 +234,66 @@
     opacity: 0.85;
   }
 
+  /* ===== Coverage map (used on founder cards + future restaurant listings) ===== */
+  .coverage-map {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5em 1.4em;
+    margin: 1rem 0 0.4rem;
+    padding: 0.8rem 0;
+    border-top: 1px dotted var(--cream-line);
+    border-bottom: 1px dotted var(--cream-line);
+    font-size: 0.92rem;
+  }
+  .coverage-map .station {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.4em;
+  }
+  .coverage-map .station .label {
+    color: var(--muted);
+    text-transform: uppercase;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+  }
+  .coverage-map .station .value { color: var(--ink); }
+  .coverage-map .station .value.purified {
+    color: var(--ink);
+    font-weight: bold;
+  }
+  .coverage-map .station .value.tap {
+    color: var(--muted);
+  }
+  .coverage-map .station .value.poe {
+    color: var(--gold);
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: 0.85rem;
+  }
+  .coverage-map.whole-poe { justify-content: center; }
+
+  /* ===== Coverage explainer (in tiers section) ===== */
+  .coverage-explainer {
+    margin-top: 2.5rem;
+    padding: 1.5rem 1.8rem;
+    background: var(--paper);
+    border-left: 3px solid var(--gold);
+  }
+  .coverage-explainer h3 {
+    font-size: 1.1rem;
+    color: var(--ink);
+    margin-bottom: 0.6em;
+    font-weight: bold;
+    letter-spacing: 0.02em;
+  }
+  .coverage-explainer p {
+    font-size: 1rem;
+    color: var(--text);
+    line-height: 1.65;
+    margin: 0;
+  }
+
   /* ===== Founding members section (hidden until cards land) ===== */
   .founders-section { background: var(--cream); }
   .founders-section .inner { max-width: 1000px; }
@@ -516,8 +576,8 @@
 <!-- ===== Tiers ===== -->
 <section class="tiers-section" id="tiers">
   <div class="inner">
-    <h2 class="section-title">The three tiers</h2>
-    <p class="section-sub">Each tier is earned by what was actually measured. Restaurants can move up as they invest in better water.</p>
+    <h2 class="section-title">The tier ladder <em>— and the coverage map</em></h2>
+    <p class="section-sub">Three additive tiers, earned by what was actually measured. Below the tier badge, every listing shows an explicit per-station coverage map so the verification reads as a receipt, not a headline.</p>
 
     <div class="tier-grid">
       <!-- Recommended -->
@@ -574,6 +634,11 @@
         <p>Whole-restaurant purification at point of entry. Every tap, every appliance, every sink. The unicorn.</p>
       </div>
     </div>
+
+    <div class="coverage-explainer">
+      <h3>Every listing shows its per-station coverage</h3>
+      <p>The tier above is the rollup classification. Beneath it on every listing, you'll see a per-station coverage map — drinking, beverages, ice, cooking — so you can see exactly what's purified and what's not, station by station. Restaurants that have invested in filtration but haven't crossed the tier threshold (often: equipment lines and cooking water filtered, drinking water still tap) can still be listed honestly. Their coverage map shows what they have. The tier badge appears only when one is earned.</p>
+    </div>
   </div>
 </section>
 
@@ -589,7 +654,18 @@
     <p class="section-sub">Restaurants that joined the guide at the founding moment. The founding badge recognizes the founding act, not the water quality — tier badges, when assigned, sit alongside it.</p>
     <div class="founders-grid">
       <!--
-        Example founder card (uncomment and populate when ready):
+        Example founder card (uncomment and populate when ready).
+
+        Coverage map below is REQUIRED on every listing (founder or otherwise).
+        Stations: drinking, beverages, ice, cooking. Use .value.purified for
+        filtered, .value.tap for unfiltered. For whole-restaurant point-of-entry,
+        replace the four-station map with a single .value.poe entry on a
+        .coverage-map.whole-poe block (see commented variant below).
+
+        Founder-tier indicator: only render the span.founder-tier when a tier
+        rollup has been earned (drinking + beverages both purified at minimum).
+        For partial-coverage listings, omit it — the coverage map alone is the
+        honest receipt.
 
         <article class="founder-card">
           <svg class="founding-badge" viewBox="0 0 200 200">
@@ -601,8 +677,23 @@
           <h3>Restaurant name</h3>
           <p class="founder-meta">Confirmed YYYY-MM-DD &middot; Apple Maps: <a href="...">link</a></p>
           <p class="founder-note">One-paragraph origin note: the conversation that led to founding agreement.</p>
-          <span class="founder-tier none">Tier pending — readings forthcoming</span>
+
+          <div class="coverage-map">
+            <span class="station"><span class="label">Drinking</span><span class="value tap">tap</span></span>
+            <span class="station"><span class="label">Beverages</span><span class="value tap">tap</span></span>
+            <span class="station"><span class="label">Ice</span><span class="value tap">tap</span></span>
+            <span class="station"><span class="label">Cooking</span><span class="value purified">purified</span></span>
+          </div>
+
+          [optional, only if tier earned]
+          <span class="founder-tier">Recommended</span>
         </article>
+
+        Whole-restaurant POE variant of the coverage map:
+
+        <div class="coverage-map whole-poe">
+          <span class="station"><span class="value poe">Whole-restaurant purification</span></span>
+        </div>
       -->
     </div>
   </div>

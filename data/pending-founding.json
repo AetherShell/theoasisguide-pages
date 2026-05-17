@@ -12,7 +12,7 @@
       "ice": "tap",
       "cooking": "purified",
       "whole_restaurant_poe": false,
-      "_provisional": "Worst-case before James kit visit. Confirm at visit: does the 3M feed (a) the bar drink line, (b) the ice machine line, (c) any dedicated drinking-water tap separate from the cooking sink? Flip values to 'purified' as each is confirmed."
+      "_provisional": "Worst-case before James kit visit. Confirm at visit: does the 3M feed (a) the bar drink line, (b) the ice machine line, (c) any dedicated drinking-water tap separate from the cooking sink? Flip values to 'purified' as each is confirmed. Recommended (the directory floor) requires drinking AND beverages both purified. If post-visit coverage doesn't reach Recommended, SSC retains the founding badge (independent of tier per Founding Badge Rule) but doesn't get a directory listing."
     },
     "readings": [],
     "test_date": null,
@@ -34,7 +34,7 @@
       "known_issue": "ongoing hard water complaint — refiner conversation pending"
     },
     "next_action": "James returns with TDS/hardness/chlorine test kit, takes readings at every customer-facing tap, books Hyperion refiner appointment. Confirm bar/ice/drinking-station coverage during visit (see coverage._provisional).",
-    "publish_state": "pending — do NOT publish to live map until readings are confirmed"
+    "publish_state": "pending — directory listing requires Recommended+ (drinking + beverages both purified). Founder-card-only recognition is the fallback if coverage doesn't reach the bar."
   },
   {
     "name": "Thai Peppers",

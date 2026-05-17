@@ -576,8 +576,8 @@
 <!-- ===== Tiers ===== -->
 <section class="tiers-section" id="tiers">
   <div class="inner">
-    <h2 class="section-title">The tier ladder <em>— and the coverage map</em></h2>
-    <p class="section-sub">Three additive tiers, earned by what was actually measured. Below the tier badge, every listing shows an explicit per-station coverage map so the verification reads as a receipt, not a headline.</p>
+    <h2 class="section-title">The three tiers <em>— and the receipt</em></h2>
+    <p class="section-sub">Three additive tiers, earned by what was actually measured. Recommended is the floor for inclusion — restaurants below it aren't listed. Beneath every listing's tier badge sits a per-station coverage map so you can see exactly what's purified, station by station.</p>
 
     <div class="tier-grid">
       <!-- Recommended -->
@@ -637,7 +637,7 @@
 
     <div class="coverage-explainer">
       <h3>Every listing shows its per-station coverage</h3>
-      <p>The tier above is the rollup classification. Beneath it on every listing, you'll see a per-station coverage map — drinking, beverages, ice, cooking — so you can see exactly what's purified and what's not, station by station. Restaurants that have invested in filtration but haven't crossed the tier threshold (often: equipment lines and cooking water filtered, drinking water still tap) can still be listed honestly. Their coverage map shows what they have. The tier badge appears only when one is earned.</p>
+      <p>The tier badge is the rollup classification. Beneath it, every listing renders a per-station coverage map — drinking, beverages, ice, cooking — so you can see exactly what's purified at each fixture. A Recommended listing isn't a black box claiming "we filter water." It's a receipt: the drinking glass is purified, the bar is purified, the ice and the kitchen are tap. The coverage map substantiates the tier instead of asking you to take it on faith.</p>
     </div>
   </div>
 </section>
@@ -656,16 +656,13 @@
       <!--
         Example founder card (uncomment and populate when ready).
 
-        Coverage map below is REQUIRED on every listing (founder or otherwise).
-        Stations: drinking, beverages, ice, cooking. Use .value.purified for
-        filtered, .value.tap for unfiltered. For whole-restaurant point-of-entry,
-        replace the four-station map with a single .value.poe entry on a
-        .coverage-map.whole-poe block (see commented variant below).
-
-        Founder-tier indicator: only render the span.founder-tier when a tier
-        rollup has been earned (drinking + beverages both purified at minimum).
-        For partial-coverage listings, omit it — the coverage map alone is the
-        honest receipt.
+        Founder cards are about the founding act, not about water-quality
+        verification. The coverage map and tier badge are properties of
+        DIRECTORY listings (which require Recommended+ to exist). If a
+        founder also has a directory listing, link to it from the card.
+        If a founder hasn't earned a directory listing yet, the founder
+        card stands alone with the founding badge and the origin note —
+        no coverage map, no tier label.
 
         <article class="founder-card">
           <svg class="founding-badge" viewBox="0 0 200 200">
@@ -678,18 +675,22 @@
           <p class="founder-meta">Confirmed YYYY-MM-DD &middot; Apple Maps: <a href="...">link</a></p>
           <p class="founder-note">One-paragraph origin note: the conversation that led to founding agreement.</p>
 
-          <div class="coverage-map">
-            <span class="station"><span class="label">Drinking</span><span class="value tap">tap</span></span>
-            <span class="station"><span class="label">Beverages</span><span class="value tap">tap</span></span>
-            <span class="station"><span class="label">Ice</span><span class="value tap">tap</span></span>
-            <span class="station"><span class="label">Cooking</span><span class="value purified">purified</span></span>
-          </div>
-
-          [optional, only if tier earned]
-          <span class="founder-tier">Recommended</span>
+          [optional, only if the founder also has a directory listing]
+          <p class="founder-meta"><a href="#directory-stars-shawarma-city">See directory listing &rarr;</a></p>
         </article>
 
-        Whole-restaurant POE variant of the coverage map:
+        For DIRECTORY listings (separate template, lives in the directory
+        section once restaurant listings are wired), the coverage map sits
+        beneath the tier badge:
+
+        <div class="coverage-map">
+          <span class="station"><span class="label">Drinking</span><span class="value purified">purified</span></span>
+          <span class="station"><span class="label">Beverages</span><span class="value purified">purified</span></span>
+          <span class="station"><span class="label">Ice</span><span class="value tap">tap</span></span>
+          <span class="station"><span class="label">Cooking</span><span class="value tap">tap</span></span>
+        </div>
+
+        Whole-restaurant POE variant (Exemplary tier):
 
         <div class="coverage-map whole-poe">
           <span class="station"><span class="value poe">Whole-restaurant purification</span></span>
@@ -765,7 +766,7 @@
     <h2 class="section-title">For restaurants <em>— join the guide</em></h2>
     <p class="section-sub">Free baseline listing. Free on-site water test. Founding restaurants keep a permanent featured spot.</p>
 
-    <form class="signup" id="signup-form" method="POST" action="https://formspree.io/f/FORMSPREE_ENDPOINT_TBD">
+    <form class="signup" id="signup-form" method="POST" action="https://formspree.io/f/xjgzvyjw">
       <label class="half">
         Restaurant name
         <input type="text" name="restaurant" required>
@@ -826,7 +827,7 @@
   // Get a Formspree endpoint at https://formspree.io (free tier is fine for current volume).
   // Replace the value below with your endpoint URL (https://formspree.io/f/abcdwxyz).
   // Until this is replaced, the form will display an error message instead of submitting.
-  const FORMSPREE_ENDPOINT = "https://formspree.io/f/FORMSPREE_ENDPOINT_TBD";
+  const FORMSPREE_ENDPOINT = "https://formspree.io/f/xjgzvyjw";
 
   // ===== UTM capture =====
   // Reads ?utm_source=... and friends from the URL on landing, stores in sessionStorage,
@@ -863,12 +864,6 @@
       const submitBtn = form.querySelector('button[type="submit"]');
 
       errBox.style.display = 'none';
-
-      if (FORMSPREE_ENDPOINT.includes('FORMSPREE_ENDPOINT_TBD')) {
-        errMsg.textContent = "The signup form isn't connected yet. Please try again later or reach out via safewatersouthwest.com.";
-        errBox.style.display = 'block';
-        return;
-      }
 
       const formData = new FormData(form);
       const utms = getStoredUtms();

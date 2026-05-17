@@ -65,7 +65,9 @@ Tier-less founding members live in `data/pending-founding.json` until readings e
 
 ## Schema addendum — 2026-05-17: per-station coverage
 
-The tier ladder (Recommended / Distinguished / Exemplary) is preserved as additive — see the `2026-05-17-brief-tier-system-partial-coverage.md` brief for the full rationale. To honestly publish restaurants that have invested in filtration without crossing the Recommended threshold (commonly: cooking and equipment lines filtered, drinking water still tap), add a `coverage` object to each restaurant entry:
+The tier ladder (Recommended / Distinguished / Exemplary) is preserved as additive — see the `2026-05-17-brief-tier-system-partial-coverage.md` brief for the rationale on coverage tracking. Note: that brief proposed publishing sub-Recommended listings with coverage maps in lieu of tier badges; James reversed that within the same session. **Recommended is the floor for directory inclusion.** Restaurants below it aren't listed at all. Coverage tracking still applies — the coverage map is the per-station receipt for the tier each listing earned, not a workaround for unfiltered ones.
+
+Add a `coverage` object to each restaurant entry:
 
 ```typescript
 {
@@ -87,11 +89,14 @@ Default is `unknown` for any station not yet assessed. Render lean: omit unknown
 - `whole_restaurant_poe: true` → `Exemplary` (3 drops)
 - Else, drinking + beverages + ice + cooking all `purified` → `Distinguished` (2 drops)
 - Else, drinking + beverages both `purified` → `Recommended` (1 drop)
-- Else → `null`
+- Else → `null` — **not listed in the directory.**
 
-**Display rule:** every listing renders the coverage map regardless of tier. The tier badge appears only when one is earned. For partial-coverage listings, the coverage map is the listing's verification receipt — no negative tier label is shown.
+**Display rule:**
 
-This preserves "drops are earned breadth" semantics for the prestige ladder while letting partial-coverage restaurants be honestly published.
+- Directory listings (Recommended / Distinguished / Exemplary): render the tier badge plus the per-station coverage map as the receipt.
+- Restaurants that don't reach Recommended: no directory listing. Coverage data may still be tracked privately (`pending-founding.json` or equivalent) for narrative or follow-up purposes, but it doesn't go on the public map.
+
+**Founding cohort, separately:** the founding badge is independent of tier per the existing Founding Badge Rule. Founders who also earn a directory listing appear in both the founders section and on the directory map. Founders who haven't earned a directory listing appear in the founders section with the founding badge and the origin note — no coverage map, no tier label. The founding badge recognizes the founding act, not the water quality.
 
 ---
 

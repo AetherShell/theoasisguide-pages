@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>Review — The Oasis Guide rule-bearing docs</title>
+<style>
+  :root {
+    --ink: #13355c;
+    --ink-deep: #0a2240;
+    --gold: #d4af37;
+    --gold-soft: #e6c763;
+    --cream: #fafbfc;
+    --cream-line: #e2e8f0;
+    --paper: #fafbfc;
+    --text: #0a2240;
+    --muted: #64748b;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    background: var(--paper);
+    color: var(--text);
+    line-height: 1.55;
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    display: flex;
+    flex-direction: column;
+  }
+
+  header.review {
+    background: var(--ink);
+    color: var(--cream);
+    padding: 1rem 1.5rem;
+    border-bottom: 2px solid var(--gold);
+    flex-shrink: 0;
+  }
+  .review-wrap {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .review-brand {
+    color: var(--gold-soft);
+    letter-spacing: 0.06em;
+    font-size: 1rem;
+  }
+  .review-brand em { font-style: italic; }
+  .review-brand .sep { color: var(--cream); opacity: 0.4; margin: 0 0.6em; }
+  .review-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+  }
+  .review-controls label {
+    color: var(--gold-soft);
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .review-controls select {
+    background: var(--ink-deep);
+    color: var(--cream);
+    border: 1px solid var(--gold);
+    padding: 0.55rem 0.9rem;
+    font-family: Georgia, serif;
+    font-size: 0.95rem;
+    min-width: 280px;
+    cursor: pointer;
+  }
+  .review-controls select:focus { outline: 1px solid var(--gold-soft); }
+  .review-controls .open-new {
+    color: var(--gold-soft);
+    text-decoration: none;
+    font-size: 0.85rem;
+    border: 1px solid rgba(212, 175, 55, 0.4);
+    padding: 0.5rem 0.85rem;
+    transition: background 0.15s, color 0.15s;
+  }
+  .review-controls .open-new:hover {
+    background: var(--gold);
+    color: var(--ink-deep);
+    border-color: var(--gold);
+  }
+
+  .doc-meta {
+    background: var(--cream);
+    border-bottom: 1px solid var(--cream-line);
+    padding: 0.65rem 1.5rem;
+    font-size: 0.85rem;
+    color: var(--muted);
+    flex-shrink: 0;
+  }
+  .doc-meta .meta-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .doc-meta .path {
+    font-family: 'Courier New', monospace;
+    color: var(--ink);
+  }
+  .doc-meta .note { font-style: italic; }
+
+  iframe#viewer {
+    flex: 1;
+    width: 100%;
+    border: none;
+    background: var(--paper);
+    min-height: 0;
+  }
+
+  .empty-state {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 3rem 1.5rem;
+    text-align: center;
+    color: var(--muted);
+  }
+  .empty-state h2 {
+    font-size: 1.4rem;
+    color: var(--ink);
+    margin-bottom: 0.6em;
+    font-weight: normal;
+  }
+  .empty-state p { max-width: 540px; line-height: 1.65; }
+
+  footer.review {
+    background: var(--ink-deep);
+    color: var(--cream);
+    padding: 0.7rem 1.5rem;
+    font-size: 0.8rem;
+    text-align: center;
+    opacity: 0.7;
+    flex-shrink: 0;
+  }
+  footer.review a { color: var(--gold-soft); }
+</style>
+</head>
+<body>
+
+<header class="review">
+  <div class="review-wrap">
+    <div class="review-brand"><em>The</em> Oasis Guide <span class="sep">·</span> Review</div>
+    <div class="review-controls">
+      <label for="doc-select">Doc</label>
+      <select id="doc-select">
+        <option value="" data-meta="Select a document above to view it in the panel below.">— Select a document —</option>
+
+        <optgroup label="Public site (live)">
+          <option value="/" data-meta="The live homepage at theoasisguide.com — what visitors see.">index.html — live homepage</option>
+          <option value="/pitch-onepager.html" data-meta="Printable letter-size pitch sheet handed out in person.">pitch-onepager.html — printable pitch sheet</option>
+          <option value="/badge-mockups.html" data-meta="Tier badge variants. Option C is the locked direction.">badge-mockups.html — badge directions</option>
+        </optgroup>
+
+        <optgroup label="Charter &amp; schema (in repo)">
+          <option value="/review/founding-members.md" data-meta="Founding Members charter — append-only ceremonial record. Includes the 2026-05-17 schema addendum (coverage + Recommended floor rule).">FOUNDING-MEMBERS.md — charter + schema</option>
+          <option value="/review/pending-founding.json" data-meta="Machine source of truth for tier-less founder entries. SSC entry has the coverage._provisional field for the kit visit.">data/pending-founding.json — machine state</option>
+          <option value="/review/vision-handoff.md" data-meta="Vision handoff for Manus — full architecture, tier model, pitch discipline, standing constraints. §3, §4, §7, §9 carry the new floor rule.">VISION-HANDOFF-FOR-MANUS.md — full vision</option>
+        </optgroup>
+
+        <optgroup label="Pitch &amp; outreach (from dispatch)">
+          <option value="/review/pitch-crib.md" data-meta="Phone-friendly verbal pitch script. Objection handlers updated 2026-05-17 with the partial-coverage case.">pitch-crib-sheet.md — verbal pitch</option>
+          <option value="/review/outreach-templates.md" data-meta="Cold email / SMS / in-person templates. Floor rule woven through; header note explains why cold copy stays soft on disqualification.">outreach-templates.md — outreach copy</option>
+        </optgroup>
+
+        <optgroup label="Historical (superseded)">
+          <option value="/review/partial-coverage-brief.md" data-meta="Original 2026-05-17 brief proposing sub-Recommended listings with coverage maps. SUPERSEDED header at top documents the reversal — kept for the historical record.">2026-05-17 brief (SUPERSEDED)</option>
+        </optgroup>
+      </select>
+      <a id="open-new" class="open-new" href="#" target="_blank" rel="noopener" style="display:none">Open in new tab ↗</a>
+    </div>
+  </div>
+</header>
+
+<div class="doc-meta" id="doc-meta" style="display:none">
+  <div class="meta-inner">
+    <span class="path" id="doc-path"></span>
+    <span class="note" id="doc-note"></span>
+  </div>
+</div>
+
+<div id="empty-state" class="empty-state">
+  <h2>Pick a document to review</h2>
+  <p>This page is the review hub for The Oasis Guide's rule-bearing docs as of 2026-05-17. Selecting a doc from the dropdown loads it in the panel below. Use "Open in new tab" if you'd rather read full-width without the chrome.</p>
+  <p style="margin-top: 1em; font-size: 0.85rem;">Page is <code>noindex</code> and the <code>/review/</code> subdirectory is blocked in robots.txt. Not linked from the public nav. Discoverable only by knowing the URL.</p>
+</div>
+
+<iframe id="viewer" style="display:none"></iframe>
+
+<footer class="review">
+  Review surface · not for public visitors · <a href="/">return to public site</a>
+</footer>
+
+<script>
+  const select = document.getElementById('doc-select');
+  const viewer = document.getElementById('viewer');
+  const empty = document.getElementById('empty-state');
+  const meta = document.getElementById('doc-meta');
+  const path = document.getElementById('doc-path');
+  const note = document.getElementById('doc-note');
+  const openNew = document.getElementById('open-new');
+
+  function loadDoc(url, metaText) {
+    if (!url) {
+      viewer.style.display = 'none';
+      empty.style.display = 'flex';
+      meta.style.display = 'none';
+      openNew.style.display = 'none';
+      return;
+    }
+    viewer.src = url;
+    viewer.style.display = 'block';
+    empty.style.display = 'none';
+    path.textContent = url;
+    note.textContent = metaText || '';
+    meta.style.display = 'block';
+    openNew.href = url;
+    openNew.style.display = 'inline-block';
+  }
+
+  select.addEventListener('change', function() {
+    const opt = select.options[select.selectedIndex];
+    loadDoc(select.value, opt.dataset.meta);
+    // Reflect choice in URL hash so the selection is shareable / restorable on reload.
+    if (select.value) {
+      history.replaceState(null, '', '#' + encodeURIComponent(select.value));
+    } else {
+      history.replaceState(null, '', '#');
+    }
+  });
+
+  // Restore selection from URL hash on load (e.g. when bookmarked or reloaded).
+  (function restoreFromHash() {
+    const hash = decodeURIComponent(window.location.hash.replace(/^#/, ''));
+    if (!hash) return;
+    for (let i = 0; i < select.options.length; i++) {
+      if (select.options[i].value === hash) {
+        select.selectedIndex = i;
+        loadDoc(hash, select.options[i].dataset.meta);
+        return;
+      }
+    }
+  })();
+</script>
+
+</body>
+</html>

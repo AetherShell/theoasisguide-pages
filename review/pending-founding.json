@@ -1,0 +1,166 @@
+[
+  {
+    "name": "Stars Shawarma City",
+    "apple_maps_url": "https://maps.apple/p/r9bKND0g857SM5",
+    "address": null,
+    "lat": null,
+    "lng": null,
+    "tier": null,
+    "coverage": {
+      "drinking": "tap",
+      "beverages": "tap",
+      "ice": "tap",
+      "cooking": "purified",
+      "whole_restaurant_poe": false,
+      "_provisional": "Worst-case before James kit visit. Confirm at visit: does the 3M feed (a) the bar drink line, (b) the ice machine line, (c) any dedicated drinking-water tap separate from the cooking sink? Flip values to 'purified' as each is confirmed. Recommended (the directory floor) requires drinking AND beverages both purified. If post-visit coverage doesn't reach Recommended, SSC retains the founding badge (independent of tier per Founding Badge Rule) but doesn't get a directory listing."
+    },
+    "readings": [],
+    "test_date": null,
+    "photo_url": null,
+    "writeup": null,
+    "restaurant_url": null,
+    "founding_member": true,
+    "founding_status": {
+      "confirmed_at": "2026-05-14",
+      "confirmed_by": "owner_verbal",
+      "is_inspiration_for_guide": true,
+      "origin_note": "Owner installed filtration after James asked about purified water on an early visit. This restaurant is the inspiration for The Oasis Guide."
+    },
+    "current_system": {
+      "type": "commercial_carbon",
+      "vendor": "3M",
+      "stages": "two-stage carbon/sediment",
+      "ro": false,
+      "known_issue": "ongoing hard water complaint — refiner conversation pending"
+    },
+    "next_action": "James returns with TDS/hardness/chlorine test kit, takes readings at every customer-facing tap, books Hyperion refiner appointment. Confirm bar/ice/drinking-station coverage during visit (see coverage._provisional).",
+    "publish_state": "pending — directory listing requires Recommended+ (drinking + beverages both purified). Founder-card-only recognition is the fallback if coverage doesn't reach the bar."
+  },
+  {
+    "name": "Thai Peppers",
+    "apple_maps_url": null,
+    "address": "235 E Warner Rd, Suite 107, Gilbert, AZ 85296",
+    "lat": null,
+    "lng": null,
+    "tier": null,
+    "readings": [],
+    "test_date": null,
+    "photo_url": null,
+    "writeup": null,
+    "restaurant_url": "https://www.thaipeppersaz.com/",
+    "phone": "(602) 654-2696",
+    "founding_member": false,
+    "candidate_source": {
+      "added_at": "2026-05-14",
+      "added_by": "claude-code",
+      "reason": "James-requested — near Lifetime Fitness Gilbert (Williams Field/Warner area). Technically 85296 but adjacent to 85233 cluster."
+    },
+    "next_action": "James visit with TDS/pH/hardness kit; assess water quality + gauge owner interest in founding-member listing.",
+    "publish_state": "candidate — no visit yet"
+  },
+  {
+    "name": "Blue Wasabi Sushi and Martini Bar",
+    "apple_maps_url": null,
+    "address": "2080 E Williams Field Rd #101, Gilbert, AZ (near Lifetime Fitness Williams Field — verify ZIP on visit)",
+    "lat": null,
+    "lng": null,
+    "tier": null,
+    "readings": [],
+    "test_date": null,
+    "photo_url": null,
+    "writeup": null,
+    "restaurant_url": "https://bluewasabisushi.com/",
+    "founding_member": false,
+    "candidate_source": {
+      "added_at": "2026-05-14",
+      "added_by": "claude-code",
+      "reason": "James-requested — closest sushi to Lifetime Fitness Williams Field per web search."
+    },
+    "next_action": "James visit with TDS/pH/hardness kit; assess water quality + gauge owner interest in founding-member listing.",
+    "publish_state": "candidate — no visit yet"
+  },
+  {
+    "name": "Orient Sushi & Grill",
+    "apple_maps_url": null,
+    "address": "1455 W Elliot Rd, Suite 105, Gilbert, AZ 85233",
+    "lat": null,
+    "lng": null,
+    "tier": null,
+    "readings": [],
+    "test_date": null,
+    "photo_url": null,
+    "writeup": null,
+    "restaurant_url": "https://orientsushi.com/",
+    "founding_member": false,
+    "candidate_source": {
+      "added_at": "2026-05-14",
+      "added_by": "claude-code",
+      "reason": "James-requested — sushi restaurant in 85233."
+    },
+    "next_action": "James visit with TDS/pH/hardness kit; assess water quality + gauge owner interest in founding-member listing.",
+    "publish_state": "candidate — no visit yet"
+  },
+  {
+    "name": "Sushi San Restaurant",
+    "apple_maps_url": null,
+    "address": "1440 W Warner Rd, STE 125A, Gilbert, AZ 85233",
+    "lat": null,
+    "lng": null,
+    "tier": null,
+    "readings": [],
+    "test_date": null,
+    "photo_url": null,
+    "writeup": null,
+    "restaurant_url": "https://sushisanaz.squarespace.com/",
+    "founding_member": false,
+    "candidate_source": {
+      "added_at": "2026-05-14",
+      "added_by": "claude-code",
+      "reason": "James-requested — sushi restaurant in 85233."
+    },
+    "next_action": "James visit with TDS/pH/hardness kit; assess water quality + gauge owner interest in founding-member listing.",
+    "publish_state": "candidate — no visit yet"
+  },
+  {
+    "name": "Yanagi Sushi",
+    "apple_maps_url": null,
+    "address": "884 W Warner Rd, Gilbert, AZ 85233",
+    "lat": null,
+    "lng": null,
+    "tier": null,
+    "readings": [],
+    "test_date": null,
+    "photo_url": null,
+    "writeup": null,
+    "restaurant_url": "https://www.yanagisushiaz.com/",
+    "founding_member": false,
+    "candidate_source": {
+      "added_at": "2026-05-14",
+      "added_by": "claude-code",
+      "reason": "James-requested — sushi restaurant in 85233."
+    },
+    "next_action": "James visit with TDS/pH/hardness kit; assess water quality + gauge owner interest in founding-member listing.",
+    "publish_state": "candidate — no visit yet"
+  },
+  {
+    "name": "Sakura Sushi",
+    "apple_maps_url": null,
+    "address": "825 S Cooper Rd, Ste B6, Gilbert, AZ 85233",
+    "lat": null,
+    "lng": null,
+    "tier": null,
+    "readings": [],
+    "test_date": null,
+    "photo_url": null,
+    "writeup": null,
+    "restaurant_url": "https://www.sakurasushigilbert.com/",
+    "founding_member": false,
+    "candidate_source": {
+      "added_at": "2026-05-14",
+      "added_by": "claude-code",
+      "reason": "James-requested — sushi restaurant in 85233."
+    },
+    "next_action": "James visit with TDS/pH/hardness kit; assess water quality + gauge owner interest in founding-member listing.",
+    "publish_state": "candidate — no visit yet"
+  }
+]

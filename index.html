@@ -391,6 +391,37 @@
     line-height: 1.65;
   }
 
+  /* ===== Pitch-link row (above the signup form) ===== */
+  .pitch-link-row {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.8em 1.2em;
+    margin: -0.6rem 0 1.8rem;
+    padding: 0.9rem 1.2rem;
+    background: rgba(255, 255, 255, 0.04);
+    border-left: 3px solid var(--gold);
+  }
+  .pitch-link-row .pitch-link {
+    color: var(--gold-soft);
+    text-decoration: none;
+    font-size: 1rem;
+    letter-spacing: 0.04em;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.4);
+    padding-bottom: 0.1em;
+    transition: color 0.15s, border-color 0.15s;
+  }
+  .pitch-link-row .pitch-link:hover {
+    color: var(--gold);
+    border-bottom-color: var(--gold);
+  }
+  .pitch-link-row .pitch-link-note {
+    color: var(--gold-soft);
+    opacity: 0.65;
+    font-size: 0.85rem;
+    font-style: italic;
+  }
+
   /* ===== Signup form ===== */
   .signup-section { background: var(--ink); color: var(--cream); }
   .signup-section h2.section-title { color: var(--cream); border-bottom-color: rgba(201, 161, 74, 0.4); }
@@ -521,6 +552,7 @@
       <a href="#directory">Directory</a>
       <a href="#faq">FAQ</a>
       <a href="#join">Restaurants</a>
+      <a href="/pitch-onepager.html">Pitch sheet</a>
     </nav>
   </div>
 </header>
@@ -764,7 +796,12 @@
 <section class="signup-section" id="join">
   <div class="inner">
     <h2 class="section-title">For restaurants <em>— join the guide</em></h2>
-    <p class="section-sub">Free baseline listing. Free on-site water test. Founding restaurants keep a permanent featured spot.</p>
+    <p class="section-sub">Free on-site water-quality test. Free listing for restaurants whose readings reach the Recommended floor (purified drinking water and beverages). Founding-cohort recognition is permanent.</p>
+
+    <p class="pitch-link-row">
+      <a href="/pitch-onepager.html" class="pitch-link">Read the pitch sheet &rarr;</a>
+      <span class="pitch-link-note">One-pager you can show on a phone or print on letter paper.</span>
+    </p>
 
     <form class="signup" id="signup-form" method="POST" action="https://formspree.io/f/xjgzvyjw">
       <label class="half">

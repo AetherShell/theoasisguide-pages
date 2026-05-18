@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Oasis Guide — Pitch Sheet for Restaurants</title>
 <style>
   @page { size: letter; margin: 0.6in; }
@@ -12,9 +13,49 @@
     background: #fafbfc;
     line-height: 1.45;
     font-size: 11pt;
-    margin: 0;
+    margin: 0 auto;
     padding: 0.6in;
     max-width: 8.5in;
+  }
+
+  /* Back-to-site bar — visible on screen, hidden in print */
+  .site-bar {
+    background: #13355c;
+    color: #fafbfc;
+    padding: 0.6em 1em;
+    margin: -0.6in -0.6in 1.5em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.8em;
+    font-size: 10pt;
+    flex-wrap: wrap;
+  }
+  .site-bar a {
+    color: #e6c763;
+    text-decoration: none;
+    letter-spacing: 0.04em;
+  }
+  .site-bar a:hover { color: #d4af37; text-decoration: underline; }
+  .site-bar .left { font-style: italic; opacity: 0.8; }
+  @media print { .site-bar { display: none; } }
+
+  /* Mobile responsiveness — keep the print layout untouched, adapt only on small screens */
+  @media (max-width: 720px) {
+    body {
+      font-size: 12pt;
+      padding: 0.8em;
+      max-width: 100%;
+    }
+    .site-bar {
+      margin: -0.8em -0.8em 1em;
+      padding: 0.6em 0.8em;
+    }
+    .cols { display: block !important; }
+    .cols > div { margin-bottom: 1em; }
+    .tiers { grid-template-columns: 1fr !important; }
+    h1.brand { font-size: 22pt !important; }
+    .lede { font-size: 11pt !important; }
   }
   header { text-align: center; border-bottom: 1px solid #e2e8f0; padding-bottom: 1.1em; margin-bottom: 1.5em; }
   .brand {
@@ -84,6 +125,11 @@
 </style>
 </head>
 <body>
+
+<div class="site-bar">
+  <span class="left">Pitch sheet · printable or screen-shareable</span>
+  <a href="/">&larr; theoasisguide.com</a>
+</div>
 
 <header>
   <h1 class="brand">The Oasis <span class="a">Guide</span></h1>
@@ -167,7 +213,7 @@
 
 <footer>
   <p class="contact"><strong>James Arkell</strong> &nbsp;·&nbsp; The Oasis Guide</p>
-  <p>theoasisguide.com (launching soon) &nbsp;·&nbsp; A Safe Water Southwest project</p>
+  <p><a href="/" style="color:#13355c; text-decoration:underline; text-decoration-color:#d4af37;">theoasisguide.com</a> &nbsp;·&nbsp; A Safe Water Southwest project</p>
 </footer>
 
 </body>

@@ -58,6 +58,10 @@ Three tiers, named Michelin-style. **Tier badges are earned, not bought.** On-si
 | **Distinguished** | 2 | Purified drinking, beverages, ice, AND cooking water. Kitchen + bar both clean. |
 | **Exemplary** | 3 | Whole-restaurant purification at point of entry. Every tap, every appliance. The unicorn. |
 
+**Directory inclusion floor (set 2026-05-17):** Recommended is the floor. Restaurants whose readings don't reach Recommended — including the common case of equipment-only filtration (cooking and ice clean, drinking water still tap) — are not listed in the directory. No public listing, no negative listing. Kit data stays private, the relationship continues, and the listing becomes available the moment a re-test reaches the floor.
+
+**Per-station coverage map (added 2026-05-17):** every directory listing renders an explicit per-station coverage map below the tier badge, showing what's purified at each fixture (drinking, beverages, ice, cooking). The map is the verification receipt that substantiates the tier — a Recommended listing isn't a black box claiming "we filter water"; it's a receipt showing the drinking glass and bar are purified while ice and cooking are tap. Schema and rendering rules are in `FOUNDING-MEMBERS.md` schema addendum (2026-05-17).
+
 Optional **alkaline** orthogonal tag — descriptive only ("offers alkaline pH 8.5+"). Never endorse health claims. Credibility risk if SWSW backs contested claims.
 
 ---
@@ -68,7 +72,7 @@ Optional **alkaline** orthogonal tag — descriptive only ("offers alkaline pH 8
 - **GitHub Pages + Namecheap DNS** — repo `AetherShell/theoasisguide-pages` (per DNS notes). DNS records in `shared/dispatch/oasis-guide/dns-namecheap-records.md`.
 - **Map:** Leaflet 1.9.4 + OpenStreetMap tiles. No API key, no recurring cost. Centered Phoenix metro `[33.45, -112.0]`, zoom 10, scroll-wheel zoom disabled (annoying on long pages).
 - **Restaurant data:** JS array of objects mirroring the v6.html vendor-directory pattern in `projects/water-database/`. Each entry: `name`, `address`, `lat`, `lng`, `tier`, `readings` (array of tap-by-tap TDS/pH), `test_date`, `photo_url`, `writeup`, `restaurant_url`, **`founding_member` (boolean), `founding_confirmed_at`, `founding_confirmed_by`, `is_inspiration`**.
-- **Founding members:** A restaurant flagged `founding_member: true` displays a founding badge **independent** of tier status — see `FOUNDING-MEMBERS.md` for the charter rule. Founding members without verified tier readings live in `data/pending-founding.json`; when readings are taken and a tier is assigned, the entry promotes to `restaurants.json` with `founding_member: true` preserved. Founding badge is visually distinct from tier badges (not a fourth tier). A founding member who later fails tier verification keeps the founding badge — it recognizes the founding act, not the water quality.
+- **Founding members:** A restaurant flagged `founding_member: true` displays a founding badge **independent** of tier status — see `FOUNDING-MEMBERS.md` for the charter rule. Founding members without verified tier readings live in `data/pending-founding.json`; when readings reach Recommended+ and a tier is assigned, the entry promotes to `restaurants.json` with `founding_member: true` preserved. **Founders whose readings don't reach Recommended don't get a directory listing** — they appear in a founders section on the guide with the founding badge and the origin note, no coverage map, no tier label, no map pin. Founding badge is visually distinct from tier badges (not a fourth tier). A founding member who later fails tier verification keeps the founding badge — it recognizes the founding act, not the water quality.
 - **Signup backend:** existing Google Sheets pattern (the same one SWSW residential uses). Apps Script webhook → sheet row.
 - **Photos:** restaurant-provided URLs first; if needed, GitHub repo `/photos/`. Skip S3 in v1.
 - **Hand-curated launch:** 3–5 of James's relationship restaurants. Brunch (Phoenix) is the first warm lead.
@@ -127,6 +131,8 @@ Both paths exist but neither is wired in v1. Building the asset first, proving t
 - **No fear-based copy.** Aspirational only. The guide is about finding good water, not avoiding bad water.
 - **No alkaline health claims.** Descriptive tag only.
 - **No pay-to-tier.** Featured placement OK with disclosure; tier badge is earned by on-site test only.
+- **Recommended floor for the directory.** Restaurants whose readings don't reach Recommended (purified drinking water and beverages, at minimum) aren't listed in the directory. The kit visit determines this; no listing is promised in advance of the readings.
+- **Founding cohort is closed by event, not by criteria** — see `FOUNDING-MEMBERS.md`. Founding status is independent of the directory floor; founders without directory listings get founder-card-only recognition.
 - **Disclosure rule:** on home/category pages, NEVER on listing pages.
 - **Annual re-test** to keep listing current — written into the pitch.
 - **Each location verified separately** — chains list locations, not brands.
@@ -209,14 +215,15 @@ Same hex, no fill, all strokes/text in `#1a3a4a` on cream `#f6f1e6`. Use for men
 
 ## 9. Listing page (NOT yet built — Manus should design this)
 
-Each restaurant listing should be its own page, not a card on a master list. The directory page is the map + index; the listing page is the editorial unit.
+Each restaurant listing should be its own page, not a card on a master list. The directory page is the map + index; the listing page is the editorial unit. **Listing pages exist only for restaurants whose readings reach Recommended+** (per the directory inclusion floor in §3). Restaurants below the floor get no listing page; founders below the floor get a founder-card-only entry in the founders section (see §4 founding members bullet).
 
 Suggested layout per listing:
 
 - **Hero strip:** hero photo of the restaurant (interior or filtration setup), tier badge in the corner.
 - **H1:** restaurant name + tier line (e.g., "Christopher's at Wrigley Mansion — Distinguished")
 - **Lede paragraph (~80 words):** editorial writeup. What kind of restaurant, what the chef cares about, why the water is part of that story. James's voice.
-- **The readings table:** every tap tested, TDS in ppm, pH, test date. Calibrated meter model footnoted.
+- **Per-station coverage map (added 2026-05-17):** Drinking · Beverages · Ice · Cooking — each labeled `purified` or `tap`. Sits beneath the tier badge as the verification receipt. For Exemplary listings, single "Whole-restaurant purification (point of entry)" entry instead of the four-station map. See `index.html` `.coverage-map` CSS for the rendering reference.
+- **The readings table:** every tap tested, TDS in ppm, pH, test date. Calibrated meter model footnoted. The readings substantiate the coverage map; the map is the human-readable summary.
   - Bar
   - Ice machine
   - Drinking-water station

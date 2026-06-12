@@ -1,0 +1,26 @@
+[
+  {
+    "id": "mad-hatter-kava-ahwatukee",
+    "name": "Mad Hatter Kava — Ahwatukee",
+    "address": "15425 S 48th St, Suite 116, Phoenix, AZ 85044",
+    "lat": 33.3068,
+    "lng": -111.9799,
+    "restaurant_url": "https://madhatterkava.com/",
+    "phone": "(480) 758-5644",
+    "coverage": {
+      "drinking": "purified",
+      "beverages": "purified",
+      "ice": "unknown",
+      "cooking": "unknown",
+      "whole_restaurant_poe": false
+    },
+    "readings": [],
+    "test_date": "2026-06-12",
+    "verified_by": "James, Safe Water Southwest",
+    "writeup": null,
+    "founding_member": false,
+    "_founding_note": "Ownership group is staged FM#3 (multi-location, Gilbert anchor) in shared/dispatch/oasis-guide/founding-additions-2026-05-17.md. Flip founding_member to true here once James supplies the agreement date + origin note and the charter entry is promoted. Founding badge attaches to the agreement; tier stays per-location.",
+    "_readings_note": "James tested on site 2026-06-12 — qualifies Recommended (drinking + beverages purified). Meter numbers not yet recorded in this file; add TDS/pH readings when James supplies them so the listing carries its receipt.",
+    "publish_state": "published"
+  }
+]

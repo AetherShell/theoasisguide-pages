@@ -273,6 +273,41 @@
   }
   .coverage-map.whole-poe { justify-content: center; }
 
+  /* ===== Map pins + listing popups ===== */
+  .oasis-pin { background: none; border: none; }
+  .oasis-pin svg { filter: drop-shadow(0 2px 3px rgba(0,0,0,0.35)); }
+  .listing-popup h3 {
+    font-family: Georgia, serif;
+    font-size: 1.1rem;
+    font-weight: normal;
+    color: var(--ink);
+    margin: 0 0 0.3rem;
+  }
+  .listing-popup .popup-tier {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    margin: 0;
+    color: var(--gold);
+    font-family: Georgia, serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.15em;
+    font-weight: bold;
+  }
+  .listing-popup .coverage-map {
+    margin: 0.7rem 0 0.3rem;
+    padding: 0.6rem 0;
+    gap: 0.4em 1.1em;
+    font-size: 0.88rem;
+  }
+  .listing-popup .popup-meta {
+    margin: 0.4rem 0 0;
+    font-size: 0.78rem;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+  .listing-popup .popup-meta a { color: var(--ink); }
+
   /* ===== Coverage explainer (in tiers section) ===== */
   .coverage-explainer {
     margin-top: 2.5rem;
@@ -948,9 +983,90 @@
     attribution: '&copy; OpenStreetMap contributors',
   }).addTo(map);
 
-  // No restaurant markers yet — overlay says "First listings being verified."
-  // To add a listing later:
-  //   L.marker([33.45, -112.0]).addTo(map).bindPopup('Restaurant name');
+  // ===== Listings =====
+  // Listings live in data/restaurants.json. Coverage is the source of truth;
+  // tier is derived here, never hand-set. Recommended is the floor for inclusion.
+
+  function deriveTier(c) {
+    if (!c) return null;
+    if (c.whole_restaurant_poe) return { name: 'Exemplary', drops: 3 };
+    const p = s => c[s] === 'purified';
+    if (p('drinking') && p('beverages') && p('ice') && p('cooking')) return { name: 'Distinguished', drops: 2 };
+    if (p('drinking') && p('beverages')) return { name: 'Recommended', drops: 1 };
+    return null;
+  }
+
+  function dropsSvg(n) {
+    let uses = '';
+    for (let i = 0; i < n; i++) {
+      uses += '<use href="#drop" x="' + (i * 14) + '" y="0" width="12" height="18"/>';
+    }
+    return '<svg width="' + (n * 14) + '" height="18" style="color:#d4af37" aria-hidden="true">' + uses + '</svg>';
+  }
+
+  const STATIONS = [['drinking', 'Drinking'], ['beverages', 'Beverages'], ['ice', 'Ice'], ['cooking', 'Cooking']];
+
+  function coverageHtml(c) {
+    if (c.whole_restaurant_poe) {
+      return '<div class="coverage-map whole-poe"><span class="station"><span class="value poe">Whole-restaurant purification</span></span></div>';
+    }
+    // Unassessed stations are omitted, not shown as "unknown" — the map only publishes what was verified.
+    const rows = STATIONS
+      .filter(([k]) => c[k] === 'purified' || c[k] === 'tap')
+      .map(([k, label]) =>
+        '<span class="station"><span class="label">' + label + '</span><span class="value ' + c[k] + '">' + c[k] + '</span></span>');
+    return '<div class="coverage-map">' + rows.join('') + '</div>';
+  }
+
+  function formatDate(iso) {
+    if (!iso) return null;
+    const [y, m, d] = iso.split('-').map(Number);
+    const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+    return months[m - 1] + ' ' + d + ', ' + y;
+  }
+
+  function popupHtml(r, tier) {
+    let html = '<div class="listing-popup">';
+    html += '<h3>' + r.name + '</h3>';
+    html += '<p class="popup-tier">' + dropsSvg(tier.drops) + tier.name.toUpperCase() + '</p>';
+    html += coverageHtml(r.coverage);
+    const metaBits = [];
+    if (r.test_date) metaBits.push('Tested on site ' + formatDate(r.test_date));
+    if (r.verified_by) metaBits.push('Verified by ' + r.verified_by);
+    if (metaBits.length) html += '<p class="popup-meta">' + metaBits.join(' &middot; ') + '</p>';
+    const placeBits = [];
+    if (r.address) placeBits.push(r.address);
+    if (r.restaurant_url) placeBits.push('<a href="' + r.restaurant_url + '" target="_blank" rel="noopener">website</a>');
+    if (placeBits.length) html += '<p class="popup-meta">' + placeBits.join(' &middot; ') + '</p>';
+    html += '</div>';
+    return html;
+  }
+
+  const pinIcon = L.divIcon({
+    className: 'oasis-pin',
+    html: '<svg width="38" height="38" viewBox="0 0 200 200"><use href="#oasis-mark"/></svg>',
+    iconSize: [38, 38],
+    iconAnchor: [19, 19],
+    popupAnchor: [0, -22],
+  });
+
+  fetch('data/restaurants.json')
+    .then(resp => resp.ok ? resp.json() : Promise.reject(new Error('HTTP ' + resp.status)))
+    .then(restaurants => {
+      const live = restaurants
+        .filter(r => r.publish_state === 'published' && r.lat != null && r.lng != null)
+        .map(r => ({ entry: r, tier: deriveTier(r.coverage) }))
+        .filter(x => x.tier);
+      if (!live.length) return;
+      const overlay = document.querySelector('.map-empty-overlay');
+      if (overlay) overlay.style.display = 'none';
+      live.forEach(({ entry, tier }) => {
+        L.marker([entry.lat, entry.lng], { icon: pinIcon })
+          .addTo(map)
+          .bindPopup(popupHtml(entry, tier), { maxWidth: 320 });
+      });
+    })
+    .catch(() => { /* keep the empty-state overlay */ });
 </script>
 
 </body>
